@@ -25,7 +25,8 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Position
+      PositionAimed
   other-modules:
       Paths_advent_of_code_y2021
   hs-source-dirs:
