@@ -3,6 +3,7 @@ module Main where
 import Data.List
 import qualified Position as Pos
 import qualified PositionAimed as PosA
+import qualified Consumption as Cons
 
 main :: IO ()
 main = do
@@ -12,6 +13,8 @@ main = do
   putStrLn "Day 2: Dive!"
   putStrLn $ "  Part 1: " ++ show (Pos.product $ position Pos.initial (toCommands commands))
   putStrLn $ "  Part 2: " ++ show (PosA.product $ positionWithAim PosA.initial (toCommands commands))
+  putStrLn "Day 3: Binary Diagnostic"
+  putStrLn $ "  Part 1: " ++ show (Cons.consumption $ Cons.rate (Cons.toReport  Cons.report))
 
 velocityWithSliding :: Int -> [Int] -> Int
 velocityWithSliding x ms = velocity $ map sum $ transpose $ take x $ iterate tail ms

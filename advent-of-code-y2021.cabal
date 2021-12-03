@@ -25,6 +25,7 @@ source-repository head
 
 library
   exposed-modules:
+      Consumption
       Position
       PositionAimed
   other-modules:
