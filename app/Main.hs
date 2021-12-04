@@ -16,7 +16,7 @@ main = do
   putStrLn $ "  Part 2: " ++ show (PosA.product $ positionWithAim PosA.initial (toCommands commands))
   putStrLn "Day 3: Binary Diagnostic"
   putStrLn $ "  Part 1: " ++ show (Cons.consumption $ Cons.rate (Cons.toReport  Cons.report))
-  putStrLn $ "  Part 2: " ++ show (LF.rate $ Cons.toBoolMatrix Cons.report)
+  putStrLn $ "  Part 2: " ++ show (LF.lfRate $ Cons.toBoolMatrix Cons.report)
 
 velocityWithSliding :: Int -> [Int] -> Int
 velocityWithSliding x ms = velocity $ map sum $ transpose $ take x $ iterate tail ms

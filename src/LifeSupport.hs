@@ -8,25 +8,31 @@ transposedIn :: [[Bool]] -> Int -> [Bool]
 transposedIn r i = transpose r !! i
 
 cycles :: [[Bool]] -> [Int]
-cycles r = take (length (transpose r)) [0 ..]
+cycles r = take (length (head r)) [0 ..]
 
 oxiRule :: [[Bool]] -> Int -> Bool
-oxiRule r i = mostCommon (transposedIn r i)
-
-oxiCriteria :: [[Bool]] -> Int -> [[Bool]]
-oxiCriteria r i = filter (\a -> a !! i == oxiRule r i) r
-
-oxi :: [[Bool]] -> Integer
-oxi r = bin2dec $ head $ foldl oxiCriteria r (cycles r)
+oxiRule rf i = mostCommon (transposedIn rf i)
 
 co2Rule :: [[Bool]] -> Int -> Bool
 co2Rule r i = leastCommon (transposedIn r i)
 
-co2Criteria :: [[Bool]] -> Int -> [[Bool]]
-co2Criteria r i = filter (\a -> a !! i == co2Rule r i) r
+criteria :: ([[Bool]] -> Int -> Bool) -> [[Bool]] -> Int -> [Bool] -> Bool
+criteria p rf i a = a !! i == p rf i
 
-co2 :: [[Bool]] -> Integer
-co2 r = bin2dec $ head $ foldl co2Criteria r (cycles r)
+filtered :: ([[Bool]] -> Int -> Bool) -> [[Bool]] -> Int -> [[Bool]]
+filtered p rf i = filter (criteria p rf i) rf
 
-rate :: [[Bool]] -> Integer
-rate r = co2 r * oxi r
+untilCriteria :: ([[Bool]] -> Int -> Bool) -> [[Bool]] -> [[Bool]]
+untilCriteria p r = foldl (filtered p) r (cycles r)
+
+binRate :: ([[Bool]] -> Int -> Bool) -> [[Bool]] -> [Bool]
+binRate p r = head $ untilCriteria p r
+
+oxi :: [[Bool]] -> [Bool]
+oxi = binRate oxiRule
+
+co2 :: [[Bool]] -> [Bool]
+co2 = binRate co2Rule
+
+lfRate :: [[Bool]] -> Integer
+lfRate r = bin2dec (co2 r) * bin2dec (oxi r)
