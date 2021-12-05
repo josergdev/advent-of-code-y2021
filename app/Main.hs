@@ -5,6 +5,7 @@ import qualified Position as Pos
 import qualified PositionAimed as PosA
 import qualified Consumption as Cons
 import qualified LifeSupport as LF
+import qualified Bingo as B
 
 main :: IO ()
 main = do
@@ -17,6 +18,9 @@ main = do
   putStrLn "Day 3: Binary Diagnostic"
   putStrLn $ "  Part 1: " ++ show (Cons.consumption $ Cons.rate (Cons.toReport  Cons.report))
   putStrLn $ "  Part 2: " ++ show (LF.lfRate $ Cons.toBoolMatrix Cons.report)
+  putStrLn "Day 4: Giant Squid (@TODO: Needs Refactor)"
+  putStrLn $ "  Part 1: " ++ show B.sol1
+  putStrLn $ "  Part 2: " ++ show B.sol2
 
 velocityWithSliding :: Int -> [Int] -> Int
 velocityWithSliding x ms = velocity $ map sum $ transpose $ take x $ iterate tail ms
